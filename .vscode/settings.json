@@ -1,3 +1,4 @@
 {
-    "yaml.schemaStore.enable": false
+    "yaml.schemaStore.enable": false,
+    "explorer.compactFolders": false
 }

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:youcancode/features/signup/presentation/ui/widget/signup_form_list.dart';
 
 class SingUpScreen extends ConsumerStatefulWidget {
   const SingUpScreen({super.key});
@@ -18,13 +19,7 @@ class _SingUpScreenState extends ConsumerState<SingUpScreen> {
       appBar: AppBar(
         title: const Text('SingUp Screen'),
       ),
-      body: const SingleChildScrollView(
-        child: Column(
-          children: [
-            Text('SingUp Screen')
-          ],
-        ),
-      ),
+      body: const SignUpFormList(),
     );
   }
 }

@@ -46,6 +46,8 @@ class _SignUpFormListState extends ConsumerState<SignUpFormList> {
 
   @override
   Widget build(BuildContext context) {
+    _listener();
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Form(
@@ -54,6 +56,7 @@ class _SignUpFormListState extends ConsumerState<SignUpFormList> {
           children: [
             TextFormField(
               controller: _nameController,
+              keyboardType: TextInputType.name,
               decoration: const InputDecoration(
                 labelText: 'Name',
                 border: OutlineInputBorder(
@@ -73,6 +76,7 @@ class _SignUpFormListState extends ConsumerState<SignUpFormList> {
 
             TextFormField(
               controller: _emailController,
+              keyboardType: TextInputType.emailAddress,
               decoration: const InputDecoration(
                 labelText: 'Email',
                 border: OutlineInputBorder(
@@ -147,6 +151,56 @@ class _SignUpFormListState extends ConsumerState<SignUpFormList> {
         ),
       ),
     );
+  }
+
+  void _listener() {
+    // listen for error
+    ref.listen(signUpControllerProvider.select((value) => value.error), (_, next) {
+      if (next != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            duration: const Duration(seconds: 5),
+            backgroundColor: Colors.red,
+            content: Text(next),
+          ),
+        );
+      }
+    });
+    // listen for success
+    ref.listen(signUpControllerProvider.select((value) => value.isSignUpSuccess), (_, next) {
+      if (next != null && next) {
+        showDialog(
+          context: context, 
+          barrierDismissible: false,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Sign Up Successful'),
+              content: const Text('Please check your email for verification and please  verify your account'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    // close dialog
+                    context.pop();
+                    // clear controllers
+                    _clearController();
+                    // navigate to login
+                    _navigateToLogin();
+                  }, 
+                  child: const Text('Ok')
+                ),
+              ]
+            );
+          },
+        );
+      }
+    });
+  }
+
+  void _clearController() {
+    _nameController.clear();
+    _emailController.clear();
+    _passwordController.clear();
+    _confirmPasswordController.clear();
   }
 
   void _navigateToLogin() {

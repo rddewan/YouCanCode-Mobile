@@ -17,7 +17,7 @@ class _SingUpScreenState extends ConsumerState<SingUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('SingUp Screen'),
+        title: const Text('Sign Up'),
       ),
       body: const SignUpFormList(),
     );

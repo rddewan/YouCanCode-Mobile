@@ -9,7 +9,7 @@ import 'package:youcancode/features/login/data/dto/response/login_response.dart'
 
 part 'login_api.g.dart';
 
-final loginApiProvider = Provider<LoginApi>((ref) {
+final loginApiProvider = Provider.autoDispose<LoginApi>((ref) {
   final dio = ref.watch(networkServiceProvider);
   
   return LoginApi(dio);

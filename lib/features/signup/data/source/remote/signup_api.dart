@@ -7,7 +7,7 @@ import 'package:youcancode/features/signup/data/dto/response/sign_up_response.da
 
 part 'signup_api.g.dart';
 
-final signUpApiProvider = Provider<SignUpApi>((ref) {
+final signUpApiProvider = Provider.autoDispose<SignUpApi>((ref) {
   final dio = ref.watch(networkServiceProvider);
 
   return SignUpApi(dio);

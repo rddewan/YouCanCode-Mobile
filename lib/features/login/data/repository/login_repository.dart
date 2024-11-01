@@ -9,7 +9,7 @@ import 'package:youcancode/features/login/data/source/local/itoken_storage.dart'
 import 'package:youcancode/features/login/data/source/local/token_storage.dart';
 import 'package:youcancode/features/login/data/source/remote/login_api.dart';
 
-final loginRepositoryProvider = Provider<ILoginRepository>((ref) {
+final loginRepositoryProvider = Provider.autoDispose<ILoginRepository>((ref) {
   final loginApi = ref.watch(loginApiProvider);
   final tokenStorage = ref.watch(tokenStorageProvider);
 

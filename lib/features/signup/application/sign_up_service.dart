@@ -9,7 +9,7 @@ import 'package:youcancode/features/signup/data/repository/sign_up_repository.da
 import 'package:youcancode/features/signup/domain/mapper/isign_up_model_mapper.dart';
 import 'package:youcancode/features/signup/domain/model/sign_up_model.dart';
 
-final signUpServiceProvider = Provider<ISignUpService>((ref) {
+final signUpServiceProvider = Provider.autoDispose<ISignUpService>((ref) {
   final signUpRepository = ref.watch(signUpRepositoryProvider);
 
   return SignUpService(signUpRepository);

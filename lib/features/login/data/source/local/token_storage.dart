@@ -5,7 +5,7 @@ import 'package:youcancode/core/data/local/secure_storage/secure_storage.dart';
 import 'package:youcancode/core/data/local/secure_storage/secure_storage_const.dart';
 import 'package:youcancode/features/login/data/source/local/itoken_storage.dart';
 
-final tokenStorageProvider = Provider<ITokenStorage>((ref) {
+final tokenStorageProvider = Provider.autoDispose<ITokenStorage>((ref) {
   final secureStorage = ref.watch(secureStorageProvider);
 
   return TokenStorage(secureStorage);

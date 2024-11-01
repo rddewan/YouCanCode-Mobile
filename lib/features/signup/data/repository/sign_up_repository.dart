@@ -8,7 +8,7 @@ import 'package:youcancode/features/signup/data/repository/isign_up_repository.d
 import 'package:youcancode/features/signup/data/source/remote/signup_api.dart';
 
 
-final signUpRepositoryProvider = Provider<ISignUpRepository>((ref) {
+final signUpRepositoryProvider = Provider.autoDispose<ISignUpRepository>((ref) {
   final signUpApi = ref.watch(signUpApiProvider);
   
   return SignUpRepository(signUpApi);

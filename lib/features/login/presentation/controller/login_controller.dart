@@ -5,6 +5,8 @@ import 'package:youcancode/features/login/application/login_service.dart';
 import 'package:youcancode/features/login/data/dto/request/login_request.dart';
 import 'package:youcancode/features/login/presentation/state/login_state.dart';
 
+final loginControllerProvider = AutoDisposeNotifierProvider<LoginController, LoginState>(LoginController.new);
+
 class LoginController  extends AutoDisposeNotifier<LoginState> {
 
   @override
@@ -46,9 +48,11 @@ class LoginController  extends AutoDisposeNotifier<LoginState> {
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
       
-    }
+    }    
+  }
 
-    
+  void setFormData(Map<String, dynamic> formData) {
+    state = state.copyWith(loginForm: formData);
   }
 
 }

@@ -16,9 +16,9 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const LoginScreen(),
       ),
       GoRoute(
-        path: '/singup',
+        path: '/signup',
         name: singUpRoute,
-        builder: (context, state) => const SingUpScreen(),
+        builder: (context, state) => const SignUpScreen(),
       ),
     ],
   );

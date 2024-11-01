@@ -26,7 +26,7 @@ class _LoginApi implements LoginApi {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
+    final _data = loginRequest;
     final _options = _setStreamType<LoginResponse>(Options(
       method: 'POST',
       headers: _headers,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youcancode/common/extension/string_hardcoded.dart';
+import 'package:youcancode/common/style/dimens.dart';
+import 'package:youcancode/gen/assets.gen.dart';
 
 class LoginWith extends ConsumerWidget {
   const LoginWith({super.key});
@@ -13,13 +15,20 @@ class LoginWith extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           IconButton(
-            icon: const Icon(Icons.android, color: Colors.blue),
+            icon: Assets.images.google.svg(
+              width: 32,
+              height: 32,
+            ),
             onPressed: () {
               // Handle Google login
             },
           ),
+          const SizedBox(width: kMedium),
           IconButton(
-            icon: const Icon(Icons.apple, color: Colors.black),
+            icon: Assets.images.apple.svg(
+              width: 32,
+              height: 32,
+            ),
             onPressed: () {
               // Handle Apple login
             },

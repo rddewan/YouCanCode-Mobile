@@ -10,7 +10,14 @@ class LoginWith extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(children: [
-      Text("or login with".hardcoded),
+      Text(
+        "or login with".hardcoded,
+        style: const TextStyle(
+          color: Colors.black,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      const SizedBox(height: kSmall),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

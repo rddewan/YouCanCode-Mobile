@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:youcancode/common/extension/string_hardcoded.dart';
 import 'package:youcancode/common/style/dimens.dart';
 import 'package:youcancode/features/login/presentation/controller/login_controller.dart';
@@ -36,6 +37,8 @@ class _LoginFormState extends ConsumerState<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
+    _listener();
+    
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -104,6 +107,27 @@ class _LoginFormState extends ConsumerState<LoginForm> {
         ),
       ),
     );
+  }
+
+  void _listener() {
+    // listen for error
+    ref.listen(loginControllerProvider.select((value) => value.error), (_, next) {
+      if (next != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            duration: const Duration(seconds: 5),
+            backgroundColor: Colors.red,
+            content: Text(next),
+          ),
+        );
+      }
+    });
+    // listen for success
+    ref.listen(loginControllerProvider.select((value) => value.isLoginSuccess), (_, next) {
+      if (next) {
+        context.go('/home');
+      }
+    });
   }
 
   void _login() {

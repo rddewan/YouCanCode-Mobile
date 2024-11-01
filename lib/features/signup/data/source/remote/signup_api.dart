@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:youcancode/core/data/remote/endpoint.dart';
 import 'package:youcancode/core/data/remote/network_service.dart';
 import 'package:youcancode/features/signup/data/dto/request/sign_up_request.dart';
 import 'package:youcancode/features/signup/data/dto/response/sign_up_response.dart';
@@ -18,7 +19,7 @@ final signUpApiProvider = Provider.autoDispose<SignUpApi>((ref) {
 abstract class SignUpApi {
   factory SignUpApi(Dio dio) => _SignUpApi(dio);
 
-  @POST('/api/v1/auth/signup')
+  @POST(signUpEndPoint)
   Future<SignUpResponse> signUp(@Body() SignUpRequest data);
 
 }

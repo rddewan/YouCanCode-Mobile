@@ -26,7 +26,8 @@ class _LoginApi implements LoginApi {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = loginRequest;
+    final _data = <String, dynamic>{};
+    _data.addAll(loginRequest.toJson());
     final _options = _setStreamType<LoginResponse>(Options(
       method: 'POST',
       headers: _headers,

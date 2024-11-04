@@ -1,6 +1,7 @@
 
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:youcancode/core/provider/auth_state_provider.dart';
 import 'package:youcancode/features/login/application/login_service.dart';
 import 'package:youcancode/features/login/data/dto/request/login_request.dart';
 import 'package:youcancode/features/login/presentation/state/login_state.dart';
@@ -42,6 +43,10 @@ class LoginController  extends AutoDisposeNotifier<LoginState> {
 
       // call login api
       final response = await ref.read(loginServiceProvider).login(loginRequest);
+
+      // update the auth state
+      ref.invalidate(authStateProvider);
+      ref.read(authStateProvider.notifier).setAuthState(response);
 
       // update the state - isLoading = false and isLoginSuccess = response
       state = state.copyWith(isLoading: false, isLoginSuccess: response);

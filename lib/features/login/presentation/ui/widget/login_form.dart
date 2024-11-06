@@ -5,6 +5,7 @@ import 'package:youcancode/common/extension/string_hardcoded.dart';
 import 'package:youcancode/common/style/dimens.dart';
 import 'package:youcancode/features/login/presentation/controller/login_controller.dart';
 import 'package:youcancode/features/login/presentation/ui/widget/dont_have_account.dart';
+import 'package:youcancode/features/login/presentation/ui/widget/forgot_password.dart';
 import 'package:youcancode/features/login/presentation/ui/widget/login_button.dart';
 import 'package:youcancode/features/login/presentation/ui/widget/login_with.dart';
 
@@ -89,9 +90,11 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                   }
                   return null;
                 },
-              ),
-    
-              const SizedBox(height: kExtraLarge),
+              ),            
+
+              const ForgotPassword(),
+
+              const SizedBox(height: kSmall),
     
               LoginButton(onPressed: _login),
     

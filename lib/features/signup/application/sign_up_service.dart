@@ -1,6 +1,8 @@
 
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:multiple_result/multiple_result.dart';
+import 'package:youcancode/common/exception/failure.dart';
 import 'package:youcancode/features/signup/application/isign_up_service.dart';
 import 'package:youcancode/features/signup/data/dto/request/sign_up_request.dart';
 import 'package:youcancode/features/signup/data/dto/response/sign_up_response.dart';
@@ -22,17 +24,25 @@ final class SignUpService implements ISignUpService, ISignUpModelMapper {
   SignUpService(this._signUpRepository);
 
   @override
-  Future<SignUpModel> signUp(SignUpRequest data) async {
+  Future<Result<SignUpModel,Failure>> signUp(SignUpRequest data) async {
     try {
 
       final response = await _signUpRepository.signUp(data);
 
       final model = mapToSignUpModel(response);
 
-      return model;
+      return Success(model);
       
-    } catch (e) {
-      rethrow;
+    } on Failure catch (e) {
+      return Error(e);
+    } catch (e, s) {
+      return Error(
+        Failure(
+          message: e.toString(),
+          exception: e as Exception,
+          stackTrace: s,
+        )
+      );      
     }
   }
 

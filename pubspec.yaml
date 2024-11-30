@@ -32,6 +32,8 @@ dependencies:
   flutter_secure_storage: ^9.2.2
   # https://pub.dev/packages/flutter_svg
   flutter_svg: ^2.0.11
+  # https://pub.dev/packages/multiple_result
+  multiple_result: ^5.1.0
 
 
 dev_dependencies:

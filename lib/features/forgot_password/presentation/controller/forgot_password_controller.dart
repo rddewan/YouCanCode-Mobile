@@ -34,8 +34,17 @@ class ForgotPasswordController extends Notifier<ForgotPasswordState> {
       // call the service
       final result =
           await ref.read(forgotPasswordServiceProvider).forgotPassword(data);
-      // update the state - isLoading = false and isEmailSent = result
-      state = state.copyWith(isLoading: false, isEmailSent: result);
+
+      result.when(
+        (success) {
+          // update the state - isLoading = false and isEmailSent = result
+          state = state.copyWith(isLoading: false, isEmailSent: success);
+        },
+        (failure) {
+          state = state.copyWith(isLoading: false, error: failure.message);
+        },
+      );
+      
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
     }

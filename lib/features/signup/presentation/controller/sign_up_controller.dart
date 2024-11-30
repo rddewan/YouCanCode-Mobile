@@ -32,12 +32,22 @@ class SignUpController extends AutoDisposeNotifier<SignUpState> {
       );
 
       final result = await ref.read(signUpServiceProvider).signUp(formData);
-
-      state = state.copyWith(
-        isLoading: false,
-        isSignUpSuccess: result.isSugnUpSuccess,
-        signUpModel: result,
-      );
+      result.when(
+        (success) {
+          state = state.copyWith(
+            isLoading: false,
+            isSignUpSuccess: success.isSugnUpSuccess,
+            signUpModel: success,
+          );
+        },
+        (failure) {
+          state = state.copyWith(
+            isLoading: false,
+            isSignUpSuccess: null,
+            error: failure.message,
+          );
+        }
+      );     
       
     } catch (e) {
       state = state.copyWith(

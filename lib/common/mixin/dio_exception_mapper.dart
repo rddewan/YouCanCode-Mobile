@@ -56,14 +56,7 @@ mixin DioExceptionMapper {
           exception: e, 
           stackTrace: stackTrace,
         );
-      default:
-        return Failure(
-          message: "Unexpected error occurred".hardcoded, 
-          exception: e, 
-          stackTrace: stackTrace,
-        );
-      
-    }
+      }
   }
 }
 

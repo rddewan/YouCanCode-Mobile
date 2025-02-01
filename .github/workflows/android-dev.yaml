@@ -21,6 +21,9 @@ jobs:
           java-version: '17'
           distribution: 'zulu'
 
+      - name: Setup BASE URL File
+        run: echo "${{ secrets.BASE_URL_FILE }}" | base64 --decode > lib/core/data/remote/base_url.dart
+
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:

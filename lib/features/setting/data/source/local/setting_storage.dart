@@ -1,5 +1,3 @@
-
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youcancode/core/data/local/secure_storage/isecure_storage.dart';
 import 'package:youcancode/core/data/local/secure_storage/secure_storage.dart';
@@ -20,7 +18,6 @@ class SetingStorage implements ISettingStorage {
   @override
   Future<void> clearToken() async {
     await _secureStorage.delete(accessTokenKey);
-    await _secureStorage.delete(refreshTokenKey);    
+    await _secureStorage.delete(refreshTokenKey);
   }
-
 }

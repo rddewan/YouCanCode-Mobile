@@ -1,5 +1,3 @@
-
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multiple_result/multiple_result.dart';
 import 'package:youcancode/common/exception/failure.dart';
@@ -12,9 +10,7 @@ final loginServiceProvider = Provider.autoDispose<ILoginService>((ref) {
   final loginRepository = ref.watch(loginRepositoryProvider);
 
   return LoginService(loginRepository);
-
 });
-
 
 final class LoginService implements ILoginService {
   final ILoginRepository _loginRepository;
@@ -24,23 +20,17 @@ final class LoginService implements ILoginService {
   @override
   Future<Result<bool, Failure>> login(LoginRequest loginRequest) async {
     try {
-
       await _loginRepository.login(loginRequest);
 
       return const Success(true);
-      
     } on Failure catch (e) {
       return Error(e);
     } catch (e, s) {
-      return Error(
-        Failure(
-          message: e.toString(),
-          exception: e as Exception,
-          stackTrace: s,
-        )
-      );
-      
+      return Error(Failure(
+        message: e.toString(),
+        exception: e as Exception,
+        stackTrace: s,
+      ));
     }
   }
-
 }

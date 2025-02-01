@@ -1,4 +1,3 @@
-
 const double kXSmall = 4.0;
 const double kSmall = 8.0;
 const double kMedium = 16.0;

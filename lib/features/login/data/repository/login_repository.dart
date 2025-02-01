@@ -1,5 +1,3 @@
-
-
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youcancode/common/exception/failure.dart';
@@ -16,10 +14,12 @@ final loginRepositoryProvider = Provider.autoDispose<ILoginRepository>((ref) {
   final loginApi = ref.watch(loginApiProvider);
   final tokenStorage = ref.watch(tokenStorageProvider);
 
-  return LoginRepository(loginApi, tokenStorage);  
+  return LoginRepository(loginApi, tokenStorage);
 });
 
-final class LoginRepository with DioExceptionMapper implements ILoginRepository {
+final class LoginRepository
+    with DioExceptionMapper
+    implements ILoginRepository {
   final LoginApi _loginApi;
   final ITokenStorage _tokenStorage;
 
@@ -37,16 +37,15 @@ final class LoginRepository with DioExceptionMapper implements ILoginRepository 
       await _tokenStorage.storeToken(accessToken, refreshToken);
 
       return response;
-      
     } on DioException catch (e, s) {
       throw mapDioExceptionToFailure(e, s);
     } catch (e, s) {
       throw Failure(
-        message: "An unexpected error occurred. Please try again later".hardcoded,
+        message:
+            "An unexpected error occurred. Please try again later".hardcoded,
         exception: e as Exception,
         stackTrace: s,
       );
     }
   }
-  
 }

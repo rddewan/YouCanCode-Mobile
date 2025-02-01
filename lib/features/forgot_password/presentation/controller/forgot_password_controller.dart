@@ -3,7 +3,9 @@ import 'package:youcancode/features/forgot_password/application/forgot_password_
 import 'package:youcancode/features/forgot_password/data/dto/request/forgot_password_request.dart';
 import 'package:youcancode/features/forgot_password/presentation/state/forgot_password_state.dart';
 
-final forgotPasswordControllerProvider = NotifierProvider<ForgotPasswordController, ForgotPasswordState>(ForgotPasswordController.new);
+final forgotPasswordControllerProvider =
+    NotifierProvider<ForgotPasswordController, ForgotPasswordState>(
+        ForgotPasswordController.new);
 
 class ForgotPasswordController extends Notifier<ForgotPasswordState> {
   @override
@@ -44,7 +46,6 @@ class ForgotPasswordController extends Notifier<ForgotPasswordState> {
           state = state.copyWith(isLoading: false, error: failure.message);
         },
       );
-      
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
     }

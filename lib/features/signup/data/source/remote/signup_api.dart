@@ -12,7 +12,6 @@ final signUpApiProvider = Provider.autoDispose<SignUpApi>((ref) {
   final dio = ref.watch(networkServiceProvider);
 
   return SignUpApi(dio);
-  
 });
 
 @RestApi()
@@ -21,5 +20,4 @@ abstract class SignUpApi {
 
   @POST(signUpEndPoint)
   Future<SignUpResponse> signUp(@Body() SignUpRequest data);
-
 }

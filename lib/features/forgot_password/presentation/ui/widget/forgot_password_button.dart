@@ -10,14 +10,16 @@ class ForgotPasswordButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isLoading = ref.watch(forgotPasswordControllerProvider.select((value) => value.isLoading));
-        
+    final isLoading = ref.watch(
+        forgotPasswordControllerProvider.select((value) => value.isLoading));
+
     return SizedBox(
       width: double.infinity,
       child: FilledButton.icon(
         style: FilledButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: kMedium),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(kSmall)),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(kSmall)),
         ),
         label: Text(
           'Send'.hardcoded,

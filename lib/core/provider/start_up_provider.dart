@@ -14,5 +14,4 @@ Future<void> startUp(Ref ref) async {
   if (accessToken != null) {
     ref.read(authStateProvider.notifier).setAuthState(true);
   }
-  
 }

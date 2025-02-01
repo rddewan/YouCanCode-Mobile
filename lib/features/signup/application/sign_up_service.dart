@@ -1,5 +1,3 @@
-
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multiple_result/multiple_result.dart';
 import 'package:youcancode/common/exception/failure.dart';
@@ -15,7 +13,6 @@ final signUpServiceProvider = Provider.autoDispose<ISignUpService>((ref) {
   final signUpRepository = ref.watch(signUpRepositoryProvider);
 
   return SignUpService(signUpRepository);
-
 });
 
 final class SignUpService implements ISignUpService, ISignUpModelMapper {
@@ -24,25 +21,21 @@ final class SignUpService implements ISignUpService, ISignUpModelMapper {
   SignUpService(this._signUpRepository);
 
   @override
-  Future<Result<SignUpModel,Failure>> signUp(SignUpRequest data) async {
+  Future<Result<SignUpModel, Failure>> signUp(SignUpRequest data) async {
     try {
-
       final response = await _signUpRepository.signUp(data);
 
       final model = mapToSignUpModel(response);
 
       return Success(model);
-      
     } on Failure catch (e) {
       return Error(e);
     } catch (e, s) {
-      return Error(
-        Failure(
-          message: e.toString(),
-          exception: e as Exception,
-          stackTrace: s,
-        )
-      );      
+      return Error(Failure(
+        message: e.toString(),
+        exception: e as Exception,
+        stackTrace: s,
+      ));
     }
   }
 
@@ -56,5 +49,4 @@ final class SignUpService implements ISignUpService, ISignUpModelMapper {
       isSugnUpSuccess: true,
     );
   }
-  
 }

@@ -1,5 +1,3 @@
-
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -8,9 +6,8 @@ final flutterSecureStorageProvider = Provider<FlutterSecureStorage>((ref) {
     encryptedSharedPreferences: true,
   );
 
-  const iosOptions = IOSOptions(
-    accessibility: KeychainAccessibility.first_unlock
-  );
+  const iosOptions =
+      IOSOptions(accessibility: KeychainAccessibility.first_unlock);
 
   return const FlutterSecureStorage(
     aOptions: androidOptions,

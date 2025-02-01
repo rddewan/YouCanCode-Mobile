@@ -1,7 +1,4 @@
-
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 
 final authStateProvider = NotifierProvider<AuthState, bool>(AuthState.new);
 
@@ -14,5 +11,4 @@ class AuthState extends Notifier<bool> {
   void setAuthState(bool value) {
     state = value;
   }
-
 }

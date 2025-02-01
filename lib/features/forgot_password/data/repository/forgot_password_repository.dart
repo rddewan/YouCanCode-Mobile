@@ -1,6 +1,3 @@
-
-
-
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youcancode/common/exception/failure.dart';
@@ -11,34 +8,34 @@ import 'package:youcancode/features/forgot_password/data/dto/response/forgot_pas
 import 'package:youcancode/features/forgot_password/data/repository/iforgot_password_repository.dart';
 import 'package:youcancode/features/forgot_password/data/source/remote/forgot_password_api.dart';
 
-final forgotPasswordRepositoryProvider = Provider.autoDispose<IForgotPasswordRepository>((ref) {
+final forgotPasswordRepositoryProvider =
+    Provider.autoDispose<IForgotPasswordRepository>((ref) {
   final forgotPasswordApi = ref.watch(forgotPasswordApiProvider);
 
   return ForgotPasswordRepository(forgotPasswordApi);
-
 });
 
-final class ForgotPasswordRepository  with DioExceptionMapper implements IForgotPasswordRepository {
+final class ForgotPasswordRepository
+    with DioExceptionMapper
+    implements IForgotPasswordRepository {
   final ForgotPasswordApi _forgotPasswordApi;
 
   ForgotPasswordRepository(this._forgotPasswordApi);
 
   @override
-  Future<ForgotPasswordResponse> forgotPassword(ForgotPasswordRequest data) async {
-
+  Future<ForgotPasswordResponse> forgotPassword(
+      ForgotPasswordRequest data) async {
     try {
-
-     return  await _forgotPasswordApi.forgotPassword(data);
-      
+      return await _forgotPasswordApi.forgotPassword(data);
     } on DioException catch (e, s) {
       throw mapDioExceptionToFailure(e, s);
     } catch (e, s) {
       throw Failure(
-        message: "An unexpected error occurred. Please try again later".hardcoded,
+        message:
+            "An unexpected error occurred. Please try again later".hardcoded,
         exception: e as Exception,
         stackTrace: s,
       );
     }
-    
   }
 }

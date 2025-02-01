@@ -1,5 +1,3 @@
-
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youcancode/features/setting/application/isetting_service.dart';
 import 'package:youcancode/features/setting/data/repository/isetting_repository.dart';
@@ -11,7 +9,7 @@ final settingServiceProvider = Provider<IsettingService>((ref) {
   return SettingService(settingRepository);
 });
 
-final class SettingService implements IsettingService{
+final class SettingService implements IsettingService {
   final ISettingRepository _settingRepository;
 
   SettingService(this._settingRepository);
@@ -22,7 +20,6 @@ final class SettingService implements IsettingService{
       await _settingRepository.clearToken();
     } catch (_) {
       rethrow;
-    }  
-    
+    }
   }
 }

@@ -1,5 +1,3 @@
-
-
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youcancode/common/dtos/refresh_token_response.dart';
@@ -27,7 +25,6 @@ class TokenService implements ITokenService {
       _secureStorage.delete(accessTokenKey),
       _secureStorage.delete(refreshTokenKey),
     ]);
-    
   }
 
   @override
@@ -38,20 +35,15 @@ class TokenService implements ITokenService {
 
   @override
   Future<RefreshTokenResponse> refreshToken(String? refreshToken) async {
-    final response =  await _dio.post<Map<String, dynamic>>(
-      '/api/v1/auth/refresh-token',
-      data: {
-        "refreshToken": refreshToken
-      }
-    );
+    final response = await _dio.post<Map<String, dynamic>>(
+        '/api/v1/auth/refresh-token',
+        data: {"refreshToken": refreshToken});
 
     if (response.statusCode == success) {
       return RefreshTokenResponse.fromJson(response.data ?? {});
     } else {
       throw DioException(
-        requestOptions: response.requestOptions,
-        response: response
-      );
+          requestOptions: response.requestOptions, response: response);
     }
   }
 

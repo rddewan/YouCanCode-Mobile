@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youcancode/core/provider/start_up_provider.dart';
@@ -15,10 +13,10 @@ class StartUpScreen extends ConsumerWidget {
     final startUp = ref.watch(startUpProvider);
 
     return startUp.when(
-      data: (_) => builder(context), 
+      data: (_) => builder(context),
       error: (e, s) {
         return StartUpError(error: e);
-      }, 
+      },
       loading: () => const StartUpLoading(),
     );
   }

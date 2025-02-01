@@ -21,7 +21,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
 
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
- 
+
   @override
   void initState() {
     super.initState();
@@ -39,7 +39,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
   @override
   Widget build(BuildContext context) {
     _listener();
-    
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -54,31 +54,26 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                 decoration: InputDecoration(
                   labelText: 'Email'.hardcoded,
                   border: const OutlineInputBorder(
-                      borderRadius:
-                          BorderRadius.all(Radius.circular(kSmall))),
+                      borderRadius: BorderRadius.all(Radius.circular(kSmall))),
                   prefix: const Icon(Icons.email),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your email'.hardcoded;
-                  } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
-                      .hasMatch(value)) {
+                  } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
                     return 'Please enter a valid email'.hardcoded;
                   }
                   return null;
                 },
               ),
-    
               const SizedBox(height: kMedium),
-              
               TextFormField(
                 controller: _passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
                   labelText: 'Password'.hardcoded,
                   border: const OutlineInputBorder(
-                      borderRadius:
-                          BorderRadius.all(Radius.circular(kSmall))),
+                      borderRadius: BorderRadius.all(Radius.circular(kSmall))),
                   prefix: const Icon(Icons.lock),
                 ),
                 validator: (value) {
@@ -90,20 +85,13 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                   }
                   return null;
                 },
-              ),            
-
+              ),
               const ForgotPassword(),
-
               const SizedBox(height: kSmall),
-    
               LoginButton(onPressed: _login),
-    
               const SizedBox(height: kLarge),
-    
               const LoginWith(),
-    
               const SizedBox(height: kLarge),
-
               const DontHaveAccount(),
             ],
           ),
@@ -114,7 +102,8 @@ class _LoginFormState extends ConsumerState<LoginForm> {
 
   void _listener() {
     // listen for error
-    ref.listen(loginControllerProvider.select((value) => value.error), (_, next) {
+    ref.listen(loginControllerProvider.select((value) => value.error),
+        (_, next) {
       if (next != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -126,7 +115,8 @@ class _LoginFormState extends ConsumerState<LoginForm> {
       }
     });
     // listen for success
-    ref.listen(loginControllerProvider.select((value) => value.isLoginSuccess), (_, next) {
+    ref.listen(loginControllerProvider.select((value) => value.isLoginSuccess),
+        (_, next) {
       if (next) {
         context.go('/home');
       }
@@ -138,7 +128,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
 
     if (isValid) {
       // collect form data from controllers
-      final formData = {        
+      final formData = {
         'email': _emailController.text,
         'password': _passwordController.text,
       };
@@ -147,8 +137,6 @@ class _LoginFormState extends ConsumerState<LoginForm> {
       ref.read(loginControllerProvider.notifier).setFormData(formData);
       // login - call api
       ref.read(loginControllerProvider.notifier).login();
-      
     }
-
   }
 }

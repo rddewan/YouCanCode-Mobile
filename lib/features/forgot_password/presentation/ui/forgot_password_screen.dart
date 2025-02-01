@@ -85,7 +85,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
     }
   }
 
-  void _clearController() {    
+  void _clearController() {
     _emailController.clear();
   }
 
@@ -115,30 +115,30 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
       forgotPasswordControllerProvider.select((value) => value.isEmailSent),
       (_, next) {
         if (next != null && next) {
-        showDialog(
-          context: context, 
-          barrierDismissible: false,
-          builder: (context) {
-            return AlertDialog(
-              title:  Text('Email Sent Successfuly'.hardcoded),
-              content:  Text('Please check your email for further instructions'.hardcoded),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    // close dialog
-                    context.pop();
-                    // clear controllers
-                    _clearController();
-                    // navigate to login
-                    _navigateToLogin();
-                  }, 
-                  child: Text('Ok'.hardcoded)
-                ),
-              ]
-            );
-          },
-        );
-      }
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) {
+              return AlertDialog(
+                  title: Text('Email Sent Successfuly'.hardcoded),
+                  content: Text(
+                      'Please check your email for further instructions'
+                          .hardcoded),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          // close dialog
+                          context.pop();
+                          // clear controllers
+                          _clearController();
+                          // navigate to login
+                          _navigateToLogin();
+                        },
+                        child: Text('Ok'.hardcoded)),
+                  ]);
+            },
+          );
+        }
       },
     );
   }

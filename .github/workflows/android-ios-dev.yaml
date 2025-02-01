@@ -56,3 +56,9 @@ jobs:
 
       - name: Build iOS
         run: flutter build ios --debug --build-name=1.0.0 --build-number=1 --no-codesign
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-debug-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk

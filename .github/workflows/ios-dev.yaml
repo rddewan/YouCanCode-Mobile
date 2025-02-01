@@ -1,25 +1,19 @@
-name: Flutter - Android Build Dev
+name: Flutter - iOS Build Dev
 
 on:
   push:
     branches:
-      - main-1
+      - main
   pull_request:
     branches:
-      - main-1
+      - main
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name : Checkout
         uses: actions/checkout@v4
-
-      - name: Setup JDK
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'zulu'
 
       - name: Setup BASE URL File
         run: echo "${{ secrets.BASE_URL_FILE }}" | base64 --decode > lib/core/data/remote/base_url.dart
@@ -33,5 +27,11 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Build APK
-        run: flutter build apk --debug --build-name=1.0.0 --build-number=1
+      - name: Install iOS dependencies
+        run: |
+          cd iOS
+          pod install --repo-update
+          cd ..
+
+      - name: Build iOS
+        run: flutter build ios --debug --build-name=1.0.0 --build-number=1 --no-codesign

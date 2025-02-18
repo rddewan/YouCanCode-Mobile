@@ -1,0 +1,79 @@
+name: Flutter - Android-iOS Build Dev
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch: 
+        description: 'select your branch'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - dev
+          - main
+          - qa
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name : Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch }}
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'zulu'
+
+      - name: Setup BASE URL File
+        run: echo "${{ secrets.BASE_URL_FILE }}" | base64 --decode > lib/core/data/remote/base_url.dart
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: 3.27.3
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Install iOS dependencies
+        run: |
+          cd iOS
+          pod install --repo-update
+          cd ..
+
+      - name: Auto format the dart code
+        run: dart format .
+
+      - name: Verify the dart code is formatted
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Analyze the dart code
+        run: flutter analyze --fatal-warnings
+
+      - name: Run tests
+        run: flutter test
+
+      - name: Build APK
+        run: flutter build apk --debug --build-name=1.0.0 --build-number=1
+
+      - name: Build iOS
+        run: flutter build ios --debug --build-name=1.0.0 --build-number=1 --no-codesign
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-debug-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
+
+      - name: upload artifact to Firebase App Distribution
+        uses: emertozd/Firebase-Distribution-Github-Action@v2
+        with:
+          appId: ${{secrets.FIREBASE_APP_ID_ANDROID_DEV}}
+          serviceCredentialsFileContent: ${{ secrets.FIREBASE_APP_DISTRIBUTION_CREDENTIAL_FILE_CONTENT }}
+          groups: android-internal
+          file: build/app/outputs/flutter-apk/app-debug.apk

@@ -23,7 +23,7 @@ jobs:
 
       # Setup key.properties
       - name: Setup Key Properties
-        run: echo "${{ secrets.ANDROID_KEYSTORE_FILE }}" | base64 --decode > android/key.properties
+        run: echo "${{ secrets.KEY_PROPERTIES_FILE }}" | base64 --decode > android/key.properties
 
       # Setup the android siging certificate
       - name: Setup Android Siging Certificate

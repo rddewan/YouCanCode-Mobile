@@ -3,9 +3,13 @@
 A new Flutter project.
 
 # Build Command
-- Build Debug
+- Android Build Debug
 ```bash
 flutter build apk --debug --build-name=1.0.0 --build-number=1
+```
+- Android Build Release
+```bash
+flutter build appbundle --release --build-name=1.0.0 --build-number=1
 ```
 - Build ios Debug
 ```bash

@@ -15,3 +15,7 @@ flutter build appbundle --release --build-name=1.0.0 --build-number=1
 ```bash
 flutter build ios --debug --build-name=1.0.0 --build-number=1 --no-codesign
 ```
+- Build ios Release
+```bash
+flutter build ipa --release --export-options-plist ios/export_options.plist  --build-name=1.0.0 --build-number=1
+```

@@ -1,0 +1,112 @@
+name: Flutter - Android Build Release
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name : Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'zulu'
+
+      # Setup key.properties
+      - name: Setup Key Properties
+        run: echo "${{ secrets.KEY_PROPERTIES_FILE }}" | base64 --decode > android/key.properties
+
+      # Setup the android siging certificate
+      - name: Setup Android Siging Certificate
+        run: echo "${{ secrets.ANDROID_KEYSTORE_FILE }}" | base64 --decode > android/keystore/wecancode.p12
+
+      - name: Setup BASE URL File
+        run: echo "${{ secrets.BASE_URL_FILE }}" | base64 --decode > lib/core/data/remote/base_url.dart
+
+      # export options plist
+      - name: Setup Export Options Plist
+        run: echo "${{ secrets.IOS_EXPORT_OPTION }}" | base64 --decode > ios/export_options.plist
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: 3.27.3
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Install iOS dependencies
+        run: |
+          cd iOS
+          pod install --repo-update
+          cd ..
+
+      - name: Install iOS Certificate 
+        uses: apple-actions/import-codesign-certs@v3
+        with: 
+          p12-file-base64: ${{ secrets.IOS_SIGNING_CERTIFICATE }}
+          p12-password: ${{ secrets.CERTIFICATES_P12_PASSWORD }}
+
+      - name: Setup iOS Provisioning Profile
+        run: |
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          echo "${{ secrets.PROVISIONING_PROFILE_ADHOC }}" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/YouCanCodeAddHocProvisioningProfile.mobileprovision
+
+      - name: Auto format the dart code
+        run: dart format .
+
+      - name: Verify the dart code is formatted
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Analyze the dart code
+        run: flutter analyze --fatal-warnings
+
+      - name: Run tests
+        run: flutter test
+
+      - name: Build App Bundle
+        run: flutter build appbundle --release --build-name=1.0.0 --build-number=1
+
+      - name: Build iOS
+        run: flutter build ipa --release --export-options-plist ios/export_options.plist  --build-name=1.0.0 --build-number=1
+
+     
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-debug-apk
+          path: build/app/outputs/bundle/release/app-release.aab
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-adhoc-ipa
+          path: build/ios/ipa
+
+      - name: upload AAB to Firebase App Distribution
+        uses: emertozd/Firebase-Distribution-Github-Action@v2
+        with:
+          appId: ${{secrets.FIREBASE_APP_ID_ANDROID_DEV}}
+          serviceCredentialsFileContent: ${{ secrets.FIREBASE_APP_DISTRIBUTION_CREDENTIAL_FILE_CONTENT }}
+          groups: android-internal
+          file: build/app/outputs/bundle/release/app-release.aab
+
+      - name: upload IPA to Firebase App Distribution
+        uses: emertozd/Firebase-Distribution-Github-Action@v2
+        with:
+          appId: ${{secrets.FIREBASE_APP_ID_IOS_DEV}}
+          serviceCredentialsFileContent: ${{ secrets.FIREBASE_APP_DISTRIBUTION_CREDENTIAL_FILE_CONTENT }}
+          groups: ios-internal
+          file: build/ios/ipa
+
+     

@@ -47,3 +47,4 @@ app.*.map.json
 base_url.dart
 
 wecancode.p12
+export_options.plist

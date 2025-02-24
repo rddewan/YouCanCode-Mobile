@@ -1,4 +1,4 @@
-name: Flutter - Android Build Release
+name: Flutter - Android-iOS Build AdHoc
 
 on:
   push:
@@ -92,21 +92,6 @@ jobs:
         with:
           name: ios-adhoc-ipa
           path: build/ios/ipa
-
-      - name: upload AAB to Firebase App Distribution
-        uses: emertozd/Firebase-Distribution-Github-Action@v2
-        with:
-          appId: ${{secrets.FIREBASE_APP_ID_ANDROID_DEV}}
-          serviceCredentialsFileContent: ${{ secrets.FIREBASE_APP_DISTRIBUTION_CREDENTIAL_FILE_CONTENT }}
-          groups: android-internal
-          file: build/app/outputs/bundle/release/app-release.aab
-
-      - name: upload IPA to Firebase App Distribution
-        uses: emertozd/Firebase-Distribution-Github-Action@v2
-        with:
-          appId: ${{secrets.FIREBASE_APP_ID_IOS_DEV}}
-          serviceCredentialsFileContent: ${{ secrets.FIREBASE_APP_DISTRIBUTION_CREDENTIAL_FILE_CONTENT }}
-          groups: ios-internal
-          file: build/ios/ipa
+      
 
      

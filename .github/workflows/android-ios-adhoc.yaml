@@ -107,7 +107,7 @@ jobs:
           appId: ${{secrets.FIREBASE_APP_ID_IOS_DEV}}
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_APP_DISTRIBUTION_CREDENTIAL_FILE_CONTENT }}
           groups: ios-internal
-          file: build/ios/ipa
+          file: build/ios/ipa/youcancode.ipa
 
      
       

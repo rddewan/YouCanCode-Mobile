@@ -74,7 +74,7 @@ jobs:
       - name: Run tests
         run: flutter test
 
-      - name: Build App Bundle
+      - name: Build APK
         run: flutter build apk --release --build-name=1.0.0 --build-number=1
 
       - name: Build iOS
@@ -85,7 +85,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: android-debug-aab
-          path: build/app/outputs/bundle/release/app-release.apk
+          path: build/app/outputs/flutter-apk/app-release.apk
 
       - name: Upload IPA
         uses: actions/upload-artifact@v4
@@ -99,15 +99,17 @@ jobs:
           appId: ${{secrets.FIREBASE_APP_ID_ANDROID_DEV}}
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_APP_DISTRIBUTION_CREDENTIAL_FILE_CONTENT }}
           groups: android-internal
-          file: build/app/outputs/bundle/release/app-release.apk
+          file: build/app/outputs/flutter-apk/app-release.apk
 
       - name: upload IPA to Firebase App Distribution
         uses: emertozd/Firebase-Distribution-Github-Action@v2
         with:
-          appId: ${{secrets.FIREBASE_APP_ID_ANDROID_DEV}}
+          appId: ${{secrets.FIREBASE_APP_ID_IOS_DEV}}
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_APP_DISTRIBUTION_CREDENTIAL_FILE_CONTENT }}
           groups: ios-internal
           file: build/ios/ipa
+
+     
       
 
      

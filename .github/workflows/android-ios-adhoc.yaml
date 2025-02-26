@@ -19,7 +19,20 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: '17'
-          distribution: 'zulu'   
+          distribution: 'zulu'  
+          
+      # Cache Gradele
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        id: gradle-cache
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
 
       # Setup key.properties
       - name: Setup Key Properties
@@ -44,6 +57,16 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
+
+      # Cache CocoaPods
+      - name: Cache CocoaPods
+        uses: actions/cache@v4
+        id: pods-cache
+        with:          
+          path: ios/Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
 
       - name: Install iOS dependencies
         run: |

@@ -20,6 +20,7 @@ jobs:
         with:
           java-version: '17'
           distribution: 'zulu'
+          
       # Cache Gradle
       - name: Cache Gradle
         uses: actions/cache@v4
@@ -105,7 +106,7 @@ jobs:
           name: ios-adhoc-ipa
           path: build/ios/ipa
 
-      - name: upload APK to Firebase App Distribution
+      - name: Upload APK to Firebase App Distribution
         uses: emertozd/Firebase-Distribution-Github-Action@v2
         with:
           appId: ${{secrets.FIREBASE_APP_ID_ANDROID_DEV}}
@@ -113,7 +114,7 @@ jobs:
           groups: android-internal
           file: build/app/outputs/flutter-apk/app-release.apk
 
-      - name: upload IPA to Firebase App Distribution
+      - name: Upload IPA to Firebase App Distribution
         uses: emertozd/Firebase-Distribution-Github-Action@v2
         with:
           appId: ${{secrets.FIREBASE_APP_ID_IOS_DEV}}
